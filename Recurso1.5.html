@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be a Super Friend!</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* El CSS no necesita cambios */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+        body { font-family: 'Nunito', sans-serif; background-color: #f0f9ff; }
+        @keyframes glow { 0%, 100% { text-shadow: 0 0 5px #fef08a, 0 0 10px #fef08a; } 50% { text-shadow: 0 0 20px #facc15, 0 0 30px #facc15; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes float-up { 0% { transform: translateY(0) scale(0); opacity: 1; } 100% { transform: translateY(-100px) scale(1.5); opacity: 0; } }
+        @keyframes speaking-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); } 50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); } }
+        .is-animating .word-title { animation: glow 1s ease-in-out; }
+        .is-animating .card-image { animation: pulse 1s ease-in-out; }
+        .is-animating .magic-star { animation: float-up 1.2s ease-out; }
+        .nav-icon.active { transform: scale(1.2); background-color: #facc15; color: #0c4a6e; }
+        .magic-word-highlight { font-weight: 900; color: #be185d; background-color: #fecdd3; padding: 2px 6px; border-radius: 6px; }
+        .is-speaking { animation: speaking-pulse 1.5s infinite; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between text-slate-800 p-4">
+
+    <!-- Header y tarjetas 1-5 se mantienen sin cambios -->
+    <header class="text-center py-4">
+        <h1 class="text-3xl md:text-5xl font-black text-sky-800 flex items-center justify-center gap-3">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-12 md:w-12 text-yellow-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+            Be a Super Friend!
+        </h1>
+        <p class="text-lg md:text-xl text-sky-600">Learn the Magic Words!</p>
+    </header>
+
+    <main class="relative w-full max-w-4xl flex-grow flex items-center justify-center">
+        <!-- Las primeras 5 tarjetas (Please, Thank You, etc.) se mantienen igual -->
+        <div data-card="0" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col"><h2 class="word-title text-5xl md:text-7xl font-black text-sky-700 mb-4">Please</h2><div class="flex-grow flex items-center justify-center my-4"><img src="images/please.png" onerror="this.src='https://placehold.co/600x600/3b82f6/ffffff?text=Please.png'" alt="Un niño pidiendo algo amablemente" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200"></div><div class="flex justify-center gap-4 mt-4"><button class="listen-button bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2" data-text="Please" data-pitch="1.7" data-rate="1.1">Listen</button><button class="magic-button bg-yellow-400 hover:bg-yellow-500 text-sky-900 font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2">Magic Power!</button></div><div class="magic-star absolute top-1/2 left-1/2 text-5xl text-yellow-400 opacity-0 pointer-events-none">⭐</div></div></div>
+        <div data-card="1" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col"><h2 class="word-title text-5xl md:text-7xl font-black text-emerald-700 mb-4">Thank you</h2><div class="flex-grow flex items-center justify-center my-4"><img src="images/thankyou.png" onerror="this.src='https://placehold.co/600x600/10b981/ffffff?text=ThankYou.png'" alt="Un niño recibiendo un regalo y sonriendo" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200"></div><div class="flex justify-center gap-4 mt-4"><button class="listen-button bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2" data-text="Thank you" data-pitch="1.6" data-rate="1.1">Listen</button><button class="magic-button bg-yellow-400 hover:bg-yellow-500 text-sky-900 font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2">Magic Power!</button></div><div class="magic-star absolute top-1/2 left-1/2 text-5xl text-emerald-400 opacity-0 pointer-events-none">❤️</div></div></div>
+        <div data-card="2" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col"><h2 class="word-title text-5xl md:text-7xl font-black text-amber-700 mb-4">Sorry</h2><div class="flex-grow flex items-center justify-center my-4"><img src="images/sorry.png" onerror="this.src='https://placehold.co/600x600/f59e0b/ffffff?text=Sorry.png'" alt="Un niño disculpándose con otro" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200"></div><div class="flex justify-center gap-4 mt-4"><button class="listen-button bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2" data-text="Sorry" data-pitch="1.5" data-rate="1">Listen</button><button class="magic-button bg-yellow-400 hover:bg-yellow-500 text-sky-900 font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2">Magic Power!</button></div><div class="magic-star absolute top-1/2 left-1/2 text-5xl text-amber-500 opacity-0 pointer-events-none">✨</div></div></div>
+        <div data-card="3" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col"><h2 class="word-title text-4xl md:text-6xl font-black text-rose-700 mb-4">You're welcome</h2><div class="flex-grow flex items-center justify-center my-4"><img src="images/welcome.png" onerror="this.src='https://placehold.co/600x600/f43f5e/ffffff?text=Welcome.png'" alt="Un niño respondiendo a un agradecimiento con una sonrisa" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200"></div><div class="flex justify-center gap-4 mt-4"><button class="listen-button bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2" data-text="You're welcome" data-pitch="1.8" data-rate="1.2">Listen</button><button class="magic-button bg-yellow-400 hover:bg-yellow-500 text-sky-900 font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2">Magic Power!</button></div><div class="magic-star absolute top-1/2 left-1/2 text-5xl text-rose-400 opacity-0 pointer-events-none">😊</div></div></div>
+        <div data-card="4" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4"><div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col"><h2 class="word-title text-5xl md:text-7xl font-black text-indigo-700 mb-4">Excuse me</h2><div class="flex-grow flex items-center justify-center my-4"><img src="images/excuseme.png" onerror="this.src='https://placehold.co/600x600/6366f1/ffffff?text=ExcuseMe.png'" alt="Un niño tratando de pasar cortésmente" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200"></div><div class="flex justify-center gap-4 mt-4"><button class="listen-button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2" data-text="Excuse me" data-pitch="1.7" data-rate="1.1">Listen</button><button class="magic-button bg-yellow-400 hover:bg-yellow-500 text-sky-900 font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2">Magic Power!</button></div><div class="magic-star absolute top-1/2 left-1/2 text-5xl text-indigo-400 opacity-0 pointer-events-none">👋</div></div></div>
+
+        <!-- Tarjeta 6: Conversación -->
+        <div data-card="5" class="card-container hidden w-full h-full flex flex-col items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center w-full flex flex-col">
+                <h2 class="word-title text-4xl md:text-6xl font-black text-violet-700 mb-4">Let's Practice!</h2>
+                <div class="flex-grow flex items-center justify-center my-4">
+                    <img src="images/conversation.png" onerror="this.src='https://placehold.co/600x600/8b5cf6/ffffff?text=conversation.png'" alt="Dos amigos conversando alegremente" class="card-image w-full h-64 md:h-80 lg:h-96 object-cover rounded-xl bg-gray-200">
+                </div>
+                
+                <!-- CAMBIO DE PERSONAJES EN EL TEXTO -->
+                <div id="conversation-text" class="text-left text-lg md:text-xl space-y-2 mb-4">
+                    <p><strong>Tom:</strong> Oh! <span class="magic-word-highlight">Excuse me</span>! I'm so <span class="magic-word-highlight">sorry</span>!</p>
+                    <p><strong>Sam:</strong> It's okay. Oh, you dropped your book.</p>
+                    <p><strong>Tom:</strong> <span class="magic-word-highlight">Please</span>, can I have it back?</p>
+                    <p><strong>Sam:</strong> Here you are.</p>
+                    <p><strong>Tom:</strong> <span class="magic-word-highlight">Thank you</span> so much!</p>
+                    <p><strong>Sam:</strong> <span class="magic-word-highlight">You're welcome</span>! Let's go play!</p>
+                </div>
+                <button id="listen-conversation-button" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2 mx-auto mt-auto">Listen to Conversation</button>
+            </div>
+        </div>
+        
+        <button id="prev-btn" class="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white transition"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-sky-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg></button>
+        <button id="next-btn" class="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white transition"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-sky-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></button>
+    </main>
+
+    <footer class="w-full flex justify-center items-center gap-2 md:gap-4 p-4">
+        <button data-nav="0" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-sky-200 flex items-center justify-center text-sky-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md">P</button>
+        <button data-nav="1" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-emerald-200 flex items-center justify-center text-emerald-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md">Ty</button>
+        <button data-nav="2" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-amber-200 flex items-center justify-center text-amber-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md">S</button>
+        <button data-nav="3" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-rose-200 flex items-center justify-center text-rose-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md">Yw</button>
+        <button data-nav="4" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md">Em</button>
+        <button data-nav="5" class="nav-icon w-10 h-10 md:w-14 md:h-14 rounded-full bg-violet-200 flex items-center justify-center text-violet-700 font-black text-lg md:text-xl transition-all duration-300 shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></button>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const navIcons = document.querySelectorAll('.nav-icon');
+            const magicButtons = document.querySelectorAll('.magic-button');
+            const listenButtons = document.querySelectorAll('.listen-button');
+            const listenConversationBtn = document.getElementById('listen-conversation-button');
+            const synth = window.speechSynthesis;
+            let voices = [];
+            
+            // CAMBIO DE VOCES: Renombrado a tomVoice y samVoice
+            let tomVoice = null;
+            let samVoice = null;
+
+            let currentCardIndex = 0;
+            const totalCards = cards.length;
+
+            function findAndSetBestVoices() {
+                voices = synth.getVoices().filter(v => v.lang.startsWith('en-'));
+                if (voices.length === 0) return;
+
+                // Intenta encontrar una voz masculina para Tom
+                tomVoice = voices.find(v => v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('Google US English')) || voices[0];
+
+                // Intenta encontrar una SEGUNDA voz masculina para Sam.
+                // Si no hay, usa otra voz distinta, y si no, usa la misma que Tom (la diferencia la hará el pitch).
+                samVoice = voices.find(v => (v.name.includes('Male') || v.name.includes('Alex')) && v.name !== tomVoice.name) || voices.find(v => v.name !== tomVoice.name) || tomVoice;
+            }
+
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = findAndSetBestVoices;
+            }
+            findAndSetBestVoices();
+
+            function showCard(index) {
+                synth.cancel();
+                document.querySelectorAll('.is-speaking').forEach(el => el.classList.remove('is-speaking'));
+                cards.forEach(card => card.classList.add('hidden'));
+                cards[index].classList.remove('hidden');
+                navIcons.forEach((icon, i) => icon.classList.toggle('active', i === index));
+            }
+            
+            function playAudio(button) {
+                if (synth.speaking) {
+                    synth.cancel();
+                    return;
+                }
+                const text = button.dataset.text;
+                const pitch = button.dataset.pitch || 1.5;
+                const rate = button.dataset.rate || 1.1;
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Para las palabras individuales, usamos una de las voces masculinas como predeterminada.
+                utterance.voice = tomVoice; 
+                utterance.pitch = parseFloat(pitch);
+                utterance.rate = parseFloat(rate);
+                utterance.onstart = () => button.classList.add('is-speaking');
+                utterance.onend = () => button.classList.remove('is-speaking');
+                utterance.onerror = () => button.classList.remove('is-speaking');
+                synth.speak(utterance);
+            }
+
+            nextBtn.addEventListener('click', () => { currentCardIndex = (currentCardIndex + 1) % totalCards; showCard(currentCardIndex); });
+            prevBtn.addEventListener('click', () => { currentCardIndex = (currentCardIndex - 1 + totalCards) % totalCards; showCard(currentCardIndex); });
+            navIcons.forEach(icon => { icon.addEventListener('click', () => { currentCardIndex = parseInt(icon.dataset.nav); showCard(currentCardIndex); }); });
+            magicButtons.forEach(button => { button.addEventListener('click', (e) => { const p = e.target.closest('.card-container'); if (p && !p.classList.contains('is-animating')) { p.classList.add('is-animating'); setTimeout(() => p.classList.remove('is-animating'), 1500); } }); });
+            
+            listenButtons.forEach(button => {
+                button.addEventListener('click', (e) => playAudio(e.currentTarget));
+            });
+            
+            // CAMBIO DE VOCES: Ajuste de pitch para diferenciar a Tom y Sam
+            const conversationLines = [
+                { text: "Oh! Excuse me! I'm so sorry!", voice: 'tom', pitch: 1.4, rate: 1.1 },
+                { text: "It's okay. Oh, you dropped your book.", voice: 'sam', pitch: 1.6, rate: 1.2 },
+                { text: "Please, can I have it back?", voice: 'tom', pitch: 1.5, rate: 1.1 },
+                { text: "Here you are.", voice: 'sam', pitch: 1.6, rate: 1.2 },
+                { text: "Thank you so much!", voice: 'tom', pitch: 1.4, rate: 1.2 },
+                { text: "You're welcome! Let's go play!", voice: 'sam', pitch: 1.7, rate: 1.3 }
+            ];
+
+            function playConversation() {
+                if (synth.speaking) {
+                    synth.cancel();
+                    return;
+                }
+                let currentLine = 0;
+                const button = listenConversationBtn;
+                function speakNextLine() {
+                    if (currentLine >= conversationLines.length) {
+                        button.classList.remove('is-speaking');
+                        return;
+                    }
+                    const line = conversationLines[currentLine];
+                    const utterance = new SpeechSynthesisUtterance(line.text);
+                    // Asigna la voz de Tom o Sam según la línea de la conversación
+                    utterance.voice = line.voice === 'tom' ? tomVoice : samVoice;
+                    utterance.pitch = line.pitch;
+                    utterance.rate = line.rate;
+                    utterance.onend = () => { currentLine++; speakNextLine(); };
+                    synth.speak(utterance);
+                }
+                button.classList.add('is-speaking');
+                speakNextLine();
+            }
+
+            listenConversationBtn.addEventListener('click', playConversation);
+            showCard(currentCardIndex);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity: Let's Be Kind! (External Images)</title>
+    <!-- Los estilos CSS son idénticos a la versión anterior, no se necesitan cambios -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+        :root {
+            --color-bg: #f0f8ff; --color-primary: #ffb3c6; --color-secondary: #a0c4ff;
+            --color-text: #333; --color-correct: #a9d8b8; --color-incorrect: #ffc4c4;
+            --color-button: #ffd6a5; --color-highlight: #fff9c4; --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Nunito', sans-serif; background-color: var(--color-bg); color: var(--color-text);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            margin: 0; padding: 20px; box-sizing: border-box;
+        }
+        #app-container {
+            background-color: white; border-radius: 20px; box-shadow: var(--shadow);
+            padding: 20px 40px; width: 100%; max-width: 900px; text-align: center;
+            display: flex; flex-direction: column; min-height: 650px;
+        }
+        #activity-content { flex-grow: 1; }
+        h1 { color: var(--color-secondary); font-size: 2.5rem; margin-bottom: 5px; }
+        p { font-size: 1.2rem; margin-bottom: 15px; }
+        #question-phrase-container {
+            font-size: 1.6rem; font-weight: bold; color: var(--color-secondary); height: 60px;
+            display: flex; align-items: center; justify-content: center; margin: 10px 0;
+        }
+        #question-phrase.highlight {
+            background-color: var(--color-highlight); padding: 8px 15px; border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        #question-container { margin-bottom: 10px; }
+        #play-audio-btn {
+            background-color: var(--color-button); border: none; border-radius: 50%;
+            width: 60px; height: 60px; cursor: pointer; box-shadow: var(--shadow);
+            transition: transform 0.2s; margin-bottom: 15px;
+        }
+        #play-audio-btn:hover { transform: scale(1.1); }
+        #play-audio-btn svg { width: 30px; height: 30px; fill: white; }
+        #options-container {
+            display: flex; justify-content: center; gap: 4%; flex-wrap: wrap;
+            align-items: stretch; min-height: 280px;
+        }
+        .option-card {
+            background-color: #f9f9f9; border: 4px solid var(--color-secondary); border-radius: 15px;
+            padding: 15px; cursor: pointer; transition: all 0.2s; display: flex;
+            align-items: center; justify-content: center; width: 40%;
+            max-width: 350px; min-width: 180px;
+        }
+        .option-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+        .option-card.disabled { pointer-events: none; opacity: 0.7; }
+        .option-card img { width: 100%; height: auto; border-radius: 8px; }
+        #feedback-container {
+            margin-top: 15px; font-size: 1.8rem; font-weight: bold; height: 40px; 
+        }
+        .feedback-correct { color: #2e8b57; }
+        .feedback-incorrect { color: #db4455; }
+        #navigation-controls {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 20px; padding: 0 10px;
+        }
+        .nav-btn {
+            background-color: var(--color-primary); color: white; border: none; border-radius: 10px;
+            padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            box-shadow: var(--shadow); transition: all 0.2s; min-width: 120px; 
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #ff9db6; }
+        .nav-btn:disabled { background-color: #e0e0e0; cursor: not-allowed; opacity: 0.6; }
+        #back-btn.hidden-visibility { visibility: hidden; }
+        #completion-screen h2 { color: var(--color-secondary); font-size: 2.2rem; }
+        #completion-screen svg { width: 150px; margin: 20px 0; }
+        .hidden { display: none; }
+        @media (max-width: 600px) {
+            #app-container { padding: 15px; min-height: auto; }
+            h1 { font-size: 2rem; }
+            #question-phrase-container { font-size: 1.3rem; height: 50px; }
+            .option-card { width: 80%; margin-bottom: 15px; }
+            #options-container { flex-direction: column; align-items: center; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- El HTML del cuerpo no cambia -->
+    <main id="app-container">
+        <div id="activity-screen">
+            <div id="activity-content"><h1>Let's Be Kind!</h1><p>Listen and choose the correct picture.</p><p id="question-phrase-container"><span id="question-phrase"></span></p><div id="question-container"><button id="play-audio-btn" title="Play Sound"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg></button><div id="options-container"></div></div><div id="feedback-container"></div></div>
+            <div id="navigation-controls"><button id="back-btn" class="nav-btn">Back</button><button id="next-btn" class="nav-btn">Next</button></div>
+        </div>
+        <div id="completion-screen" class="hidden">
+            <h2>Well Done! You are a kindness expert!</h2><svg viewBox="0 0 24 24" fill="#FFD700"><path d="M12,2C6.486,2,2,6.486,2,12s4.486,10,10,10s10-4.486,10-10S17.514,2,12,2z M12,20c-4.411,0-8-3.589-8-8s3.589-8,8-8 s8,3.589,8,8S16.411,20,12,20z"></path><path d="M14.707,8.293c-0.391-0.391-1.023-0.391-1.414,0L10,11.586l-1.293-1.293c-0.391-0.391-1.023-0.391-1.414,0 s-0.391,1.023,0,1.414l2,2C9.488,14.902,9.744,15,10,15s0.512-0.098,0.707-0.293l4-4C15.098,9.316,15.098,8.684,14.707,8.293z"></path></svg><button id="play-again-btn" class="nav-btn" style="background-color: var(--color-button);">Play Again</button>
+        </div>
+    </main>
+
+    <script>
+        // ===== CAMBIO CLAVE: Usamos rutas a archivos PNG =====
+        const questions = [
+            {
+                phrase: "I share my toys.",
+                options: [
+                    { imageUrl: 'images/share_correct.png', isCorrect: true },
+                    { imageUrl: 'images/share_incorrect.png', isCorrect: false }
+                ]
+            },
+            {
+                phrase: "I help my friend.",
+                options: [
+                    { imageUrl: 'images/help_correct.png', isCorrect: true },
+                    { imageUrl: 'images/help_incorrect.png', isCorrect: false }
+                ]
+            },
+            {
+                phrase: "I say thank you.",
+                options: [
+                    { imageUrl: 'images/thanks_correct.png', isCorrect: true },
+                    { imageUrl: 'images/thanks_incorrect.png', isCorrect: false }
+                ]
+            },
+            {
+                phrase: "I listen to my teacher.",
+                options: [
+                    { imageUrl: 'images/listen_correct.png', isCorrect: true },
+                    { imageUrl: 'images/listen_incorrect.png', isCorrect: false }
+                ]
+            },
+            {
+                phrase: "I give a hug.",
+                options: [
+                    { imageUrl: 'images/hug_correct.png', isCorrect: true },
+                    { imageUrl: 'images/hug_incorrect.png', isCorrect: false }
+                ]
+            }
+        ];
+
+        // --- Variables y Lógica JS ---
+        let currentQuestionIndex = 0;
+        let isAnswered = false;
+        const questionPhraseSpan = document.getElementById('question-phrase');
+        const playAudioBtn = document.getElementById('play-audio-btn');
+        const optionsContainer = document.getElementById('options-container');
+        // ... (el resto de las variables son iguales)
+
+        function cargarPregunta() {
+            // ... (la primera parte de la función es igual)
+            isAnswered = false;
+            const currentQuestion = questions[currentQuestionIndex];
+            questionPhraseSpan.textContent = currentQuestion.phrase;
+            optionsContainer.innerHTML = '';
+            feedbackContainer.innerHTML = '';
+            // ... (configuración de botones es igual)
+
+            // ===== CAMBIO CLAVE: Crear <img> con la ruta del archivo =====
+            currentQuestion.options.forEach(option => {
+                const card = document.createElement('div');
+                card.classList.add('option-card');
+                
+                const img = document.createElement('img');
+                img.src = option.imageUrl; // Asignamos la ruta del archivo
+                img.alt = currentQuestion.phrase; // Texto alternativo para accesibilidad
+                
+                card.appendChild(img);
+                card.dataset.correct = option.isCorrect;
+                card.addEventListener('click', verificarRespuesta);
+                optionsContainer.appendChild(card);
+            });
+            
+            setTimeout(reproducirAudio, 100);
+        }
+        
+        // El resto de las funciones de JavaScript (reproducirAudio, verificarRespuesta, etc.)
+        // no necesitan ningún cambio. Copio el resto aquí para que tengas el script completo.
+        const feedbackContainer = document.getElementById('feedback-container');
+        const backBtn = document.getElementById('back-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const activityScreen = document.getElementById('activity-screen');
+        const completionScreen = document.getElementById('completion-screen');
+        const playAgainBtn = document.getElementById('play-again-btn');
+
+        function reproducirAudio() {
+            window.speechSynthesis.cancel();
+            const phrase = questions[currentQuestionIndex].phrase;
+            const utterance = new SpeechSynthesisUtterance(phrase);
+            utterance.onstart = () => questionPhraseSpan.classList.add('highlight');
+            utterance.onend = () => questionPhraseSpan.classList.remove('highlight');
+            utterance.onerror = () => questionPhraseSpan.classList.remove('highlight');
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        function verificarRespuesta(event) {
+            if (isAnswered) return;
+            isAnswered = true;
+            nextBtn.disabled = false;
+            const selectedCard = event.currentTarget;
+            const isCorrect = selectedCard.dataset.correct === 'true';
+            document.querySelectorAll('.option-card').forEach(card => card.classList.add('disabled'));
+            if (isCorrect) {
+                feedbackContainer.textContent = 'Great job! ✨';
+                feedbackContainer.className = 'feedback-correct';
+                selectedCard.style.borderColor = 'var(--color-correct)';
+                selectedCard.style.boxShadow = '0 0 15px var(--color-correct)';
+            } else {
+                feedbackContainer.textContent = 'Try again next time!';
+                feedbackContainer.className = 'feedback-incorrect';
+                selectedCard.style.borderColor = 'var(--color-incorrect)';
+                const correctCard = optionsContainer.querySelector('[data-correct="true"]');
+                correctCard.style.borderColor = 'var(--color-correct)';
+                correctCard.style.boxShadow = '0 0 15px var(--color-correct)';
+            }
+        }
+
+        function siguientePregunta() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                cargarPregunta();
+            } else {
+                activityScreen.classList.add('hidden');
+                completionScreen.classList.remove('hidden');
+            }
+        }
+
+        function preguntaAnterior() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                cargarPregunta();
+            }
+        }
+
+        function reiniciarJuego() {
+            currentQuestionIndex = 0;
+            questions.sort(() => Math.random() - 0.5);
+            completionScreen.classList.add('hidden');
+            activityScreen.classList.remove('hidden');
+            cargarPregunta();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            questions.sort(() => Math.random() - 0.5);
+            cargarPregunta();
+        });
+        playAudioBtn.addEventListener('click', reproducirAudio);
+        nextBtn.addEventListener('click', siguientePregunta);
+        backBtn.addEventListener('click', preguntaAnterior);
+        playAgainBtn.addEventListener('click', reiniciarJuego);
+    </script>
+</body>
+</html>
